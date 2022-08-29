@@ -341,7 +341,9 @@ void StartDefaultTask(void const * argument)
   {
     osDelay(500);
 		HAL_GPIO_TogglePin(PULSE_2_GPIO_Port , LED_STM_Pin);
+		
 		HAL_GPIO_TogglePin(PULSE_1_GPIO_Port , PULSE_1_Pin);
+		
 		HAL_GPIO_TogglePin(LED_STM_GPIO_Port , PULSE_1_Pin);
   }
   /* USER CODE END 5 */
