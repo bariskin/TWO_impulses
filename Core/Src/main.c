@@ -24,6 +24,7 @@
 /* USER CODE BEGIN Includes */
 #include "mb.h"
 #include "ModbusDataHandler.h"
+#include "BSP.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -37,6 +38,10 @@ extern  uint16_t timeout_Timer7 ;
 extern volatile uint16_t counter_Timer7;
 extern void prvvTIMERExpiredISR( void );
 
+extern uint32_t work_time ;
+extern uint32_t update_time_value;
+extern uint16_t volatile start_flag ; 
+extern uint16_t volatile stop_flag; 
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -206,7 +211,7 @@ void SystemClock_Config(void)
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
@@ -271,7 +276,7 @@ static void MX_TIM7_Init(void)
 
   /* USER CODE END TIM7_Init 1 */
   htim7.Instance = TIM7;
-  htim7.Init.Prescaler = 41;
+  htim7.Init.Prescaler = 83;
   htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim7.Init.Period = 49;
   htim7.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -364,6 +369,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 }
 
@@ -462,6 +471,25 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
       prvvTIMERExpiredISR( );
     }
   } 
+	
+	else if (htim->Instance == TIM6)
+	  {
+		
+		  update_time_value++;
+			
+			if(update_time_value == work_time)
+			{
+			   work_time = 0;
+				
+			   start_flag = OFF_FLAG;
+				
+				 stop_flag = ON_FLAG;
+				
+				 HAL_TIM_Base_Stop_IT(&htim6); 
+			
+			}	
+						
+		}
 
   /* USER CODE END Callback 1 */
 }

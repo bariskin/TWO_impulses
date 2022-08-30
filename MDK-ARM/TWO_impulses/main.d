@@ -55,3 +55,4 @@ two_impulses\main.o: ..\ModbusDataHandler\Inc\ModbusDataHandler.h
 two_impulses\main.o: ..\Modbus\mbcallbacks.h
 two_impulses\main.o: ..\ModbusDataHandler\Inc\ModbusDataHandler.h
 two_impulses\main.o: ..\ModbusAddressMap\Inc\ModbusAddressMap.h
+two_impulses\main.o: ..\BSP\Inc\BSP.h

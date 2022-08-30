@@ -27,7 +27,7 @@ extern "C" {
 #define REG_HOLDING_START      (MB_START_ADDR_REG - HOLDING_REG_START_ADDR )             /*!  40202 - 40000 */
 
 /** REG_HOLDING_NREGS: number of holding registers */
-#define REG_HOLDING_NREGS 6
+#define REG_HOLDING_NREGS 8 
 
    /** OUTPUT array for holding registers */
 extern short   OutRegHoldingBuf[REG_HOLDING_NREGS];

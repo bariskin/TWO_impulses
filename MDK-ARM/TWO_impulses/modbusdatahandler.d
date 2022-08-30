@@ -54,3 +54,4 @@ two_impulses\modbusdatahandler.o: ../Middlewares/Third_Party/FreeRTOS/Source/inc
 two_impulses\modbusdatahandler.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 two_impulses\modbusdatahandler.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 two_impulses\modbusdatahandler.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
+two_impulses\modbusdatahandler.o: ..\BSP\Inc\BSP.h

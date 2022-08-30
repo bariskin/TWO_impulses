@@ -23,9 +23,13 @@ extern "C" {
   * @}
   */
  /* ------------------------Defines ----------------------------------*/
-    
+#define ON_FLAG     1
+#define OFF_FLAG   0
  /* ------------------------External variables -------------------------*/
-  
+extern uint32_t volatile counter_1;
+extern uint32_t volatile counter_2;
+
+extern uint16_t volatile start_flag; 
 
   /** @addtogroup template_file
   * @{

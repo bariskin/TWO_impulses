@@ -12,8 +12,18 @@
 
 #include "ModbusDataHandler.h"
 #include "cmsis_os.h"
+#include "BSP.h"
 /* ------------------------External variables -------------------------*/
+extern uint32_t volatile counter_1;
+extern uint32_t volatile counter_2;
 
+extern uint16_t volatile start_flag; 
+extern uint16_t volatile stop_flag; 
+
+extern uint32_t work_time;
+
+extern TIM_HandleTypeDef htim6;
+extern TIM_HandleTypeDef htim7;
 
 /* ------------------------Global variables----------------------------*/
 
@@ -60,15 +70,27 @@ void MODBUS_LeaveLock(void)
 		switch(MBRegAddr)
 		{   
 		 
+			case MB_START_CMD:
+				
+			  OutputValue =  (uint16_t)start_flag;
+				
+				break;
+			
+			case MB_STOP_FLAG:
+				
+			  OutputValue =  (uint16_t)stop_flag;
+				
+				break;
+			
 		case MB_TIME_VALUE:
 			
-		  //OutputValue = FIRST_ROW_CAL;
+		     OutputValue = (uint16_t)work_time;
 			
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   
 		case MB_TIME_VALUE + 1:
 			
-			//OutputValue = VIBRO_STATE;
+			 OutputValue =  (uint16_t)((uint32_t)(work_time >> 16));
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		case MB_COUNTER1: 
@@ -108,30 +130,47 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
    {
      uint16_t MBRegAddr = MB_START_ADDR_REG  + MBregIdx;
     
-     
      switch(MBRegAddr)
      {   
+			 
+			 case MB_START_CMD:
+				 
+			   if(RegValue == ON_FLAG)
+				  { 
+				    start_flag = ON_FLAG;
+						HAL_TIM_Base_Start_IT(&htim6); 
+				  }
+				 
+				 break;
+			/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   
+			 case  MB_STOP_FLAG:
+				 
+				 break;
+			 
+			/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/     
       case MB_TIME_VALUE:
 				
+		 	  work_time = (uint16_t)RegValue; 
 			
 			break;
-		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   
-		case MB_TIME_VALUE  + 1:
-			
+		  /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   
+		 case MB_TIME_VALUE  + 1:
+			 
+			  work_time |=  (uint32_t)(RegValue << 16); 
 			 
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
-		case MB_COUNTER1: 
+		 case MB_COUNTER1: 
 			
 		
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
-		case MB_COUNTER1 + 1: 
+		 case MB_COUNTER1 + 1: 
 			
 	   
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
-		case MB_COUNTER2:
+		 case MB_COUNTER2:
 			
 		  
 			break; 

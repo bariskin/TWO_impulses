@@ -59,8 +59,10 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define INPUT_1_Pin GPIO_PIN_8
 #define INPUT_1_GPIO_Port GPIOF
+#define INPUT_1_EXTI_IRQn EXTI9_5_IRQn
 #define INPUT_2_Pin GPIO_PIN_9
 #define INPUT_2_GPIO_Port GPIOF
+#define INPUT_2_EXTI_IRQn EXTI9_5_IRQn
 #define RS485_DIR_Pin GPIO_PIN_4
 #define RS485_DIR_GPIO_Port GPIOA
 #define LED_STM_Pin GPIO_PIN_13
