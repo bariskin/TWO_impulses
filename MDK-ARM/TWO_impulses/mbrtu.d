@@ -41,3 +41,4 @@ two_impulses\mbrtu.o: ..\Modbus\include\mbproto.h
 two_impulses\mbrtu.o: ..\Modbus\rtu\mbrtu.h
 two_impulses\mbrtu.o: ..\Modbus\include\mbframe.h
 two_impulses\mbrtu.o: ..\Modbus\rtu\mbcrc.h
+two_impulses\mbrtu.o: ..\BSP\Inc\bsp.h

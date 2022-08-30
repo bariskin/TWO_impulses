@@ -41,7 +41,7 @@
 
 #include "mbcrc.h"
 #include "mbport.h"
-
+#include "bsp.h"
 /* ----------------------- Defines ------------------------------------------*/
 #define MB_SER_PDU_SIZE_MIN     4       /*!< Minimum size of a Modbus RTU frame. */
 #define MB_SER_PDU_SIZE_MAX     256     /*!< Maximum size of a Modbus RTU frame. */
@@ -299,6 +299,11 @@ xMBRTUTransmitFSM( void )
 
     case STATE_TX_XMIT:
         /* check if we are finished. */
+		
+		      //set_TEST_LED1();
+	        enable_TX();   // enable TX
+		     
+		
         if( usSndBufferCount != 0 )
         {
             xMBPortSerialPutByte( ( CHAR )*pucSndBufferCur );
@@ -313,6 +318,11 @@ xMBRTUTransmitFSM( void )
             vMBPortSerialEnable( TRUE, FALSE );
             eSndState = STATE_TX_IDLE;
         }
+				
+				  //reset_TEST_LED1();
+			  	enable_RX();    // enable RX
+				  
+				
         break;
     }
 

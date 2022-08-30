@@ -186,7 +186,7 @@ void EXTI9_5_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI9_5_IRQn 0 */
 	
-  if (HAL_GPIO_ReadPin(INPUT_1_GPIO_Port,INPUT_1_Pin) == GPIO_PIN_SET)   
+  if (HAL_GPIO_ReadPin(INPUT_1_GPIO_Port,INPUT_1_Pin) == GPIO_PIN_RESET)   
   {  
 		if(start_flag)
 		 {			
@@ -194,7 +194,7 @@ void EXTI9_5_IRQHandler(void)
 		 }
 	}
     
-	else if (HAL_GPIO_ReadPin(INPUT_2_GPIO_Port,INPUT_2_Pin) == GPIO_PIN_SET) 
+	else if (HAL_GPIO_ReadPin(INPUT_2_GPIO_Port,INPUT_2_Pin) == GPIO_PIN_RESET) 
 	{
 		if(start_flag)
 		 {

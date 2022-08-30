@@ -16,6 +16,9 @@
 /* ------------------------External variables -------------------------*/
 extern uint32_t volatile counter_1;
 extern uint32_t volatile counter_2;
+extern uint32_t volatile update_value_1;
+extern uint32_t volatile update_value_2;
+
 
 extern uint16_t volatile start_flag; 
 extern uint16_t volatile stop_flag; 
@@ -93,27 +96,28 @@ void MODBUS_LeaveLock(void)
 			 OutputValue =  (uint16_t)((uint32_t)(work_time >> 16));
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
-		case MB_COUNTER1: 
+		case MB_COUNTER1:
 			
-			//OutputValue = BAT_VOLTAGE ;
+			OutputValue = (uint16_t)update_value_1;
+			
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		case MB_COUNTER1 + 1: 
 			
-		//	OutputValue = STATUS_1;
+      OutputValue = (uint16_t)((uint32_t)(update_value_1 >> 16));;
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		case MB_COUNTER2:
 			
-		//	OutputValue = STATUS_2;
+	    	OutputValue = (uint16_t)update_value_2;
+			
 			break; 
 		 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		case MB_COUNTER2 + 2: 
 			
-			//OutputValue = ENCODER_STATE_H;
+	    OutputValue = (uint16_t)((uint32_t)(update_value_2 >> 16));;
 			break;
 		 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/ 
-	
 	
 		}
 		return OutputValue;
@@ -145,39 +149,48 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
 			/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   
 			 case  MB_STOP_FLAG:
 				 
+				    stop_flag =  (uint8_t)RegValue;
+				 
 				 break;
 			 
 			/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/     
       case MB_TIME_VALUE:
 				
-		 	  work_time = (uint16_t)RegValue; 
+		 	    work_time = (uint16_t)RegValue; 
 			
 			break;
 		  /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   
 		 case MB_TIME_VALUE  + 1:
 			 
-			  work_time |=  (uint32_t)(RegValue << 16); 
+			    work_time |=  (uint32_t)(RegValue << 16); 
 			 
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		 case MB_COUNTER1: 
 			
+		   counter_1 = (uint16_t)RegValue; 
+		   update_value_1 =  (uint16_t)(RegValue ); 
 		
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		 case MB_COUNTER1 + 1: 
-			
-	   
+			 
+			  counter_1 |=  (uint32_t)(RegValue << 16); 
+		    update_value_1 |=  (uint32_t)(RegValue << 16); 
+		 
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		 case MB_COUNTER2:
-			
+			 
+			  counter_2 = (uint16_t)RegValue; 
+		    update_value_2 =  (uint16_t)(RegValue ); 
 		  
 			break; 
 		 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		case MB_COUNTER2  + 1: 
 			
-		
+			 counter_2 |=  (uint32_t)(RegValue << 16); 
+       update_value_2 |=  (uint32_t)(RegValue << 16);	
     break; 
      }
  }

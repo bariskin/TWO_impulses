@@ -120,6 +120,10 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
+          <Name>(нЙ
+`®_w(нЙ
+`®_w(нЙ
+</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -156,66 +160,50 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>119</LineNumber>
+          <LineNumber>189</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134227044</Address>
+          <Address>134219446</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Modbus\mbcallbacks.c</Filename>
+          <Filename>../Core/Src/stm32f4xx_it.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\TWO_impulses\../Modbus/mbcallbacks.c\119</Expression>
+          <Expression>\\TWO_impulses\../Core/Src/stm32f4xx_it.c\189</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>138</LineNumber>
+          <LineNumber>528</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134227072</Address>
+          <Address>134223044</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Modbus\mbcallbacks.c</Filename>
+          <Filename>../Core/Src/main.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\TWO_impulses\../Modbus/mbcallbacks.c\138</Expression>
+          <Expression>\\TWO_impulses\../Core/Src/main.c\528</Expression>
         </Bp>
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>102</LineNumber>
+          <LineNumber>515</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134227016</Address>
+          <Address>134223000</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Modbus\mbcallbacks.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\TWO_impulses\../Modbus/mbcallbacks.c\102</Expression>
-        </Bp>
-        <Bp>
-          <Number>3</Number>
-          <Type>0</Type>
-          <LineNumber>422</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
           <Filename>../Core/Src/main.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>\\TWO_impulses\../Core/Src/main.c\515</Expression>
         </Bp>
       </Breakpoint>
       <Tracepoint>
@@ -360,7 +348,7 @@
 
   <Group>
     <GroupName>Drivers/STM32F4xx_HAL_Driver</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

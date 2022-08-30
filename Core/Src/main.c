@@ -60,6 +60,10 @@ osThreadId ModBusTaskHandle;
 osThreadId ProcessTaskHandle;
 /* USER CODE BEGIN PV */
 
+extern uint32_t volatile update_value_1;
+extern uint32_t volatile update_value_2;
+
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -73,6 +77,8 @@ void ModBusFunction(void const * argument);
 void ProcessTaskFunction(void const * argument);
 
 /* USER CODE BEGIN PFP */
+
+
 
 /* USER CODE END PFP */
 
@@ -112,9 +118,16 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM7_Init();
   MX_TIM6_Init();
+	
   /* USER CODE BEGIN 2 */
 	
-	 /* **************Initialisation of the Modbus*************** */  
+	
+	 /* **************Initialisation of the Modbus*************** */ 
+
+   init_TEST_LEDS();
+	 
+	 enable_RX(); // direction for RS-485
+		 
    eMBErrorCode    eStatus;
    
    /* ModbusRTU init and enable 
@@ -154,9 +167,9 @@ int main(void)
   osThreadDef(ModBusTask, ModBusFunction, osPriorityNormal, 0, 256);
   ModBusTaskHandle = osThreadCreate(osThread(ModBusTask), NULL);
 
-  /* definition and creation of ProcessTask */
-  osThreadDef(ProcessTask, ProcessTaskFunction, osPriorityRealtime, 0, 256);
-  ProcessTaskHandle = osThreadCreate(osThread(ProcessTask), NULL);
+//  /* definition and creation of ProcessTask */
+//  osThreadDef(ProcessTask, ProcessTaskFunction, osPriorityRealtime, 0, 256);
+//  ProcessTaskHandle = osThreadCreate(osThread(ProcessTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -378,6 +391,30 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+void init_TEST_LEDS(void)
+  {
+	   GPIO_InitTypeDef GPIO_InitStruct = {0};
+	
+		 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_RESET);
+		 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
+		 
+		 GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
+     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+     GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);	
+	}
+void set_TEST_LED1(void)
+  {
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); 	
+	}
+
+void reset_TEST_LED1(void)
+  {
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); 	
+	}
+
+
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_StartDefaultTask */
@@ -420,7 +457,7 @@ void ModBusFunction(void const * argument)
    { 
      eMBPoll();                 /*  ModBus polling */ 
    }
-	  osDelay(5);
+	  osDelay(2);
   }
   /* USER CODE END ModBusFunction */
 }
@@ -472,24 +509,30 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     }
   } 
 	
-//	else if (htim->Instance == TIM6)
-//	  {
-//		
-//		  update_time_value++;
-//			
-//			if(update_time_value == work_time)
-//			{
-//			   work_time = 0;
-//				
-//			   start_flag = OFF_FLAG;
-//				
-//				 stop_flag = ON_FLAG;
-//				
-//				 HAL_TIM_Base_Stop_IT(&htim6); 
-//			
-//			}	
-//						
-//		}
+	else if (htim->Instance == TIM6)
+	  {
+		
+		  update_time_value++;
+			//counter_1++;
+			//counter_2++;
+			
+			if(update_time_value == work_time)
+			{
+			  	
+				 update_time_value = 0;
+				
+			   start_flag = OFF_FLAG;
+				
+				 stop_flag = ON_FLAG;
+				
+				 HAL_TIM_Base_Stop_IT(&htim6); 
+				
+				 update_value_1 = counter_1;
+         update_value_2 = counter_1;	 		
+			
+			}	
+						
+		}
 
   /* USER CODE END Callback 1 */
 }

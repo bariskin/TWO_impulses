@@ -34,6 +34,18 @@ extern uint16_t volatile start_flag;
   /** @addtogroup template_file
   * @{
   */
+	
+	void enable_TX(void);
+
+  void enable_RX(void);
+	
+  void init_TEST_LEDS(void);
+
+  void set_TEST_LED1(void);
+
+  void reset_TEST_LED1(void);
+ 
+	
 
   /**
   * @}
