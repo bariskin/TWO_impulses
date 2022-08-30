@@ -161,7 +161,7 @@ static void prvvUARTRxISR( void )
     pxMBFrameCBByteReceived(  );
 }
 
-void DINAR_UART_IRQHandler(UART_HandleTypeDef *huart)
+void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
 {
   uint32_t tmp_flag = 0, tmp_it_source = 0;
 

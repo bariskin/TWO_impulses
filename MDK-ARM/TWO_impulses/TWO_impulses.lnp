@@ -32,6 +32,7 @@
 "two_impulses\cmsis_os.o"
 "two_impulses\heap_4.o"
 "two_impulses\port.o"
+"two_impulses\bsp.o"
 "two_impulses\mbfunccoils.o"
 "two_impulses\mbfuncdiag.o"
 "two_impulses\mbfuncdisc.o"

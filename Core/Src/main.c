@@ -33,6 +33,10 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+extern  uint16_t timeout_Timer7 ;
+extern volatile uint16_t counter_Timer7;
+extern void prvvTIMERExpiredISR( void );
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -41,6 +45,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+TIM_HandleTypeDef htim6;
 TIM_HandleTypeDef htim7;
 
 UART_HandleTypeDef huart2;
@@ -57,6 +62,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM7_Init(void);
+static void MX_TIM6_Init(void);
 void StartDefaultTask(void const * argument);
 void ModBusFunction(void const * argument);
 void ProcessTaskFunction(void const * argument);
@@ -100,15 +106,16 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   MX_TIM7_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
 	
 	 /* **************Initialisation of the Modbus*************** */  
    eMBErrorCode    eStatus;
    
    /* ModbusRTU init and enable 
-      * Slave Address =  1
-      * Port          =  USART4
-      * Baud Rate     =  115200;
+      * Slave Address =  5
+      * Port          =  USART2
+      * Baud Rate     =  19200;
       * Parity        =  No Parity
     */ 
    eStatus =  eMBInit(MB_RTU, 5, 0, 19200, MB_PAR_NONE );  
@@ -209,6 +216,44 @@ void SystemClock_Config(void)
 }
 
 /**
+  * @brief TIM6 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM6_Init(void)
+{
+
+  /* USER CODE BEGIN TIM6_Init 0 */
+
+  /* USER CODE END TIM6_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM6_Init 1 */
+
+  /* USER CODE END TIM6_Init 1 */
+  htim6.Instance = TIM6;
+  htim6.Init.Prescaler = 20999;
+  htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim6.Init.Period = 3999;
+  htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM6_Init 2 */
+
+  /* USER CODE END TIM6_Init 2 */
+
+}
+
+/**
   * @brief TIM7 Initialization Function
   * @param None
   * @retval None
@@ -226,7 +271,7 @@ static void MX_TIM7_Init(void)
 
   /* USER CODE END TIM7_Init 1 */
   htim7.Instance = TIM7;
-  htim7.Init.Prescaler = 83;
+  htim7.Init.Prescaler = 41;
   htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim7.Init.Period = 49;
   htim7.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -339,12 +384,12 @@ void StartDefaultTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(500);
-		HAL_GPIO_TogglePin(PULSE_2_GPIO_Port , LED_STM_Pin);
+    osDelay(1);
+		//HAL_GPIO_TogglePin(PULSE_2_GPIO_Port , LED_STM_Pin);
 		
-		HAL_GPIO_TogglePin(PULSE_1_GPIO_Port , PULSE_1_Pin);
+		//HAL_GPIO_TogglePin(PULSE_1_GPIO_Port , PULSE_1_Pin);
 		
-		HAL_GPIO_TogglePin(LED_STM_GPIO_Port , PULSE_1_Pin);
+		//HAL_GPIO_TogglePin(LED_STM_GPIO_Port , PULSE_1_Pin);
   }
   /* USER CODE END 5 */
 }
@@ -362,10 +407,11 @@ void ModBusFunction(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-   if(!mod_bus_mutex_flag)
+  // if(!mod_bus_mutex_flag)
    { 
      eMBPoll();                 /*  ModBus polling */ 
    }
+	  osDelay(2);
   }
   /* USER CODE END ModBusFunction */
 }
@@ -405,6 +451,17 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
+	
+	  /*  timer6 for ModBus RTU */	
+  else if(htim->Instance == TIM7) 
+  {
+    
+    if((++counter_Timer7)>=timeout_Timer7)
+    {
+      counter_Timer7= 0;
+      prvvTIMERExpiredISR( );
+    }
+  } 
 
   /* USER CODE END Callback 1 */
 }
