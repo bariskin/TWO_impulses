@@ -115,7 +115,9 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs,
         case MB_REG_READ:       
             
             while( usNRegs > 0 )
+							
             {
+							  //osDelay(100);
                 MBValue =  WriteParamToModbusStack(iRegIndex);
               
                 *pucRegBuffer++ = ( unsigned char )( MBValue>> 8 );

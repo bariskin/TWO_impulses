@@ -124,7 +124,7 @@ int main(void)
 	
 	 /* **************Initialisation of the Modbus*************** */ 
 
-   init_TEST_LEDS();
+   //init_TEST_LEDS();
 	 
 	 enable_RX(); // direction for RS-485
 		 

@@ -300,18 +300,23 @@ xMBRTUTransmitFSM( void )
     case STATE_TX_XMIT:
         /* check if we are finished. */
 		
-		      //set_TEST_LED1();
-	        enable_TX();   // enable TX
-		     
-		
         if( usSndBufferCount != 0 )
         {
+					  //reset_TEST_LED1();
+					
+            enable_TX();
+					
             xMBPortSerialPutByte( ( CHAR )*pucSndBufferCur );
             pucSndBufferCur++;  /* next byte in sendbuffer. */
             usSndBufferCount--;
+					  
         }
         else
-        {
+        {	
+					  //set_TEST_LED1();
+					
+					   enable_RX();
+					
             xNeedPoll = xMBPortEventPost( EV_FRAME_SENT );
             /* Disable transmitter. This prevents another transmit buffer
              * empty interrupt. */
@@ -319,10 +324,8 @@ xMBRTUTransmitFSM( void )
             eSndState = STATE_TX_IDLE;
         }
 				
-				  //reset_TEST_LED1();
-			  	enable_RX();    // enable RX
-				  
-				
+			
+				 
         break;
     }
 
