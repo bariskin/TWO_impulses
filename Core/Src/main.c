@@ -276,7 +276,7 @@ static void MX_TIM7_Init(void)
 
   /* USER CODE END TIM7_Init 1 */
   htim7.Instance = TIM7;
-  htim7.Init.Prescaler = 83;
+  htim7.Init.Prescaler = 41;
   htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim7.Init.Period = 49;
   htim7.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -420,7 +420,7 @@ void ModBusFunction(void const * argument)
    { 
      eMBPoll();                 /*  ModBus polling */ 
    }
-	  osDelay(2);
+	  osDelay(5);
   }
   /* USER CODE END ModBusFunction */
 }
@@ -472,24 +472,24 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     }
   } 
 	
-	else if (htim->Instance == TIM6)
-	  {
-		
-		  update_time_value++;
-			
-			if(update_time_value == work_time)
-			{
-			   work_time = 0;
-				
-			   start_flag = OFF_FLAG;
-				
-				 stop_flag = ON_FLAG;
-				
-				 HAL_TIM_Base_Stop_IT(&htim6); 
-			
-			}	
-						
-		}
+//	else if (htim->Instance == TIM6)
+//	  {
+//		
+//		  update_time_value++;
+//			
+//			if(update_time_value == work_time)
+//			{
+//			   work_time = 0;
+//				
+//			   start_flag = OFF_FLAG;
+//				
+//				 stop_flag = ON_FLAG;
+//				
+//				 HAL_TIM_Base_Stop_IT(&htim6); 
+//			
+//			}	
+//						
+//		}
 
   /* USER CODE END Callback 1 */
 }
