@@ -3,7 +3,7 @@
 <title>Static Call Graph - [TWO_impulses\TWO_impulses.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image TWO_impulses\TWO_impulses.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Wed Aug 31 09:15:53 2022
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Wed Aug 31 15:43:44 2022
 <BR><P>
 <H3>Maximum Stack Usage =        264 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -726,7 +726,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI9_5_IRQHandler
 </UL>
 
-<P><STRONG><a name="[bf]"></a>HAL_GPIO_Init</STRONG> (Thumb, 450 bytes, Stack size 40 bytes, stm32f4xx_hal_gpio.o(i.HAL_GPIO_Init))
+<P><STRONG><a name="[bf]"></a>HAL_GPIO_Init</STRONG> (Thumb, 418 bytes, Stack size 40 bytes, stm32f4xx_hal_gpio.o(i.HAL_GPIO_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = HAL_GPIO_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_MspInit
@@ -841,7 +841,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_ClockConfig
 </UL>
 
-<P><STRONG><a name="[a6]"></a>HAL_RCC_OscConfig</STRONG> (Thumb, 856 bytes, Stack size 40 bytes, stm32f4xx_hal_rcc.o(i.HAL_RCC_OscConfig))
+<P><STRONG><a name="[a6]"></a>HAL_RCC_OscConfig</STRONG> (Thumb, 836 bytes, Stack size 40 bytes, stm32f4xx_hal_rcc.o(i.HAL_RCC_OscConfig))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = HAL_RCC_OscConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
@@ -1227,7 +1227,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[c2]"></a>eMBPoll</STRONG> (Thumb, 176 bytes, Stack size 16 bytes, mb.o(i.eMBPoll))
+<P><STRONG><a name="[c2]"></a>eMBPoll</STRONG> (Thumb, 174 bytes, Stack size 16 bytes, mb.o(i.eMBPoll))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = eMBPoll
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xMBPortEventPost
@@ -1247,7 +1247,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;eMBInit
 </UL>
 
-<P><STRONG><a name="[6e]"></a>eMBRTUReceive</STRONG> (Thumb, 80 bytes, Stack size 24 bytes, mbrtu.o(i.eMBRTUReceive))
+<P><STRONG><a name="[6e]"></a>eMBRTUReceive</STRONG> (Thumb, 78 bytes, Stack size 24 bytes, mbrtu.o(i.eMBRTUReceive))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72 + Unknown Stack Size
 <LI>Call Chain = eMBRTUReceive &rArr; abort &rArr; __rt_SIGABRT &rArr; __rt_SIGABRT_inner &rArr; __default_signal_display &rArr; _ttywrch
 </UL>
@@ -1258,8 +1258,8 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> mb.o(i.eMBInit)
 </UL>
-<P><STRONG><a name="[6d]"></a>eMBRTUSend</STRONG> (Thumb, 98 bytes, Stack size 24 bytes, mbrtu.o(i.eMBRTUSend))
-<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = eMBRTUSend &rArr; usMBCRC16
+<P><STRONG><a name="[6d]"></a>eMBRTUSend</STRONG> (Thumb, 104 bytes, Stack size 32 bytes, mbrtu.o(i.eMBRTUSend))
+<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = eMBRTUSend &rArr; usMBCRC16
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usMBCRC16
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vMBPortSerialEnable
@@ -1298,7 +1298,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;eMBFuncReadDiscreteInputs
 </UL>
 
-<P><STRONG><a name="[cd]"></a>eMBRegHoldingCB</STRONG> (Thumb, 114 bytes, Stack size 24 bytes, mbcallbacks.o(i.eMBRegHoldingCB))
+<P><STRONG><a name="[cd]"></a>eMBRegHoldingCB</STRONG> (Thumb, 124 bytes, Stack size 24 bytes, mbcallbacks.o(i.eMBRegHoldingCB))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = eMBRegHoldingCB &rArr; ReadParamFromModbusStack
 </UL>
 <BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteParamToModbusStack
@@ -1406,7 +1406,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvInitialiseNewTask
 </UL>
 
-<P><STRONG><a name="[d9]"></a>usMBCRC16</STRONG> (Thumb, 40 bytes, Stack size 16 bytes, mbcrc.o(i.usMBCRC16))
+<P><STRONG><a name="[d9]"></a>usMBCRC16</STRONG> (Thumb, 38 bytes, Stack size 16 bytes, mbcrc.o(i.usMBCRC16))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = usMBCRC16
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;eMBRTUSend
@@ -1590,7 +1590,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> mb.o(i.eMBInit)
 </UL>
-<P><STRONG><a name="[fc]"></a>xPortStartScheduler</STRONG> (Thumb, 222 bytes, Stack size 16 bytes, port.o(i.xPortStartScheduler))
+<P><STRONG><a name="[fc]"></a>xPortStartScheduler</STRONG> (Thumb, 224 bytes, Stack size 16 bytes, port.o(i.xPortStartScheduler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = xPortStartScheduler
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vPortSetupTimerInterrupt
@@ -1611,7 +1611,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadCreate
 </UL>
 
-<P><STRONG><a name="[e7]"></a>xTaskCreateStatic</STRONG> (Thumb, 86 bytes, Stack size 40 bytes, tasks.o(i.xTaskCreateStatic))
+<P><STRONG><a name="[e7]"></a>xTaskCreateStatic</STRONG> (Thumb, 90 bytes, Stack size 40 bytes, tasks.o(i.xTaskCreateStatic))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = xTaskCreateStatic &rArr; prvInitialiseNewTask &rArr; pxPortInitialiseStack
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvInitialiseNewTask
@@ -1737,7 +1737,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvIdleTask
 </UL>
 
-<P><STRONG><a name="[73]"></a>prvIdleTask</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, tasks.o(i.prvIdleTask))
+<P><STRONG><a name="[73]"></a>prvIdleTask</STRONG> (Thumb, 80 bytes, Stack size 0 bytes, tasks.o(i.prvIdleTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = prvIdleTask &rArr; prvDeleteTCB &rArr; vPortFree &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvDeleteTCB
