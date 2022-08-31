@@ -302,7 +302,6 @@ xMBRTUTransmitFSM( void )
 		
         if( usSndBufferCount != 0 )
         {
-					  //reset_TEST_LED1();
 					
             enable_TX();
 					
@@ -313,7 +312,6 @@ xMBRTUTransmitFSM( void )
         }
         else
         {	
-					  //set_TEST_LED1();
 					
 					   enable_RX();
 					

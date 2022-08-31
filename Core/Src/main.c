@@ -430,12 +430,7 @@ void StartDefaultTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
-		//HAL_GPIO_TogglePin(PULSE_2_GPIO_Port , LED_STM_Pin);
-		
-		//HAL_GPIO_TogglePin(PULSE_1_GPIO_Port , PULSE_1_Pin);
-		
-		//HAL_GPIO_TogglePin(LED_STM_GPIO_Port , PULSE_1_Pin);
+    osDelay(100);
   }
   /* USER CODE END 5 */
 }
@@ -513,8 +508,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	  {
 		
 		  update_time_value++;
-			//counter_1++;
-			//counter_2++;
 			
 			if(update_time_value == work_time)
 			{
