@@ -1,1 +1,3 @@
-Режим вывода команд на экран (ECHO) включен.
+/MDK-ARM/TWO_impulses/*.o
+/MDK-ARM/TWO_impulses/*.d
+/MDK-ARM/TWO_impulses/*.crf
