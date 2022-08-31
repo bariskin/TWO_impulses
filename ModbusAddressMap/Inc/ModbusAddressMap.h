@@ -21,7 +21,7 @@ extern "C" {
  
 #define MB_START_CMD                                (uint16_t)MB_START_ADDR_REG               /*40202  */
  
-#define MB_STOP_FLAG                                (uint16_t)(MB_START_CMD    + 0x01)        /*40203  */
+#define MB_STOP_FLAG                                (uint16_t)(MB_START_CMD    + 0x01)        /*40203  */ // 40202
 
 #define MB_TIME_VALUE                               (uint16_t)(MB_STOP_FLAG    + 0x01)        /*40204  */
 

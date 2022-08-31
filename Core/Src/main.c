@@ -94,7 +94,7 @@ void ProcessTaskFunction(void const * argument);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+//124
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -430,7 +430,7 @@ void StartDefaultTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(100);
+    osDelay(500);
   }
   /* USER CODE END 5 */
 }
@@ -463,17 +463,17 @@ void ModBusFunction(void const * argument)
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_ProcessTaskFunction */
-void ProcessTaskFunction(void const * argument)
-{
-  /* USER CODE BEGIN ProcessTaskFunction */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END ProcessTaskFunction */
-}
+///* USER CODE END Header_ProcessTaskFunction */
+//void ProcessTaskFunction(void const * argument)
+//{
+//  /* USER CODE BEGIN ProcessTaskFunction */
+//  /* Infinite loop */
+//  for(;;)
+//  {
+//    osDelay(1);
+//  }
+//  /* USER CODE END ProcessTaskFunction */
+//}
 
 /**
   * @brief  Period elapsed callback in non blocking mode
@@ -507,12 +507,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	else if (htim->Instance == TIM6)
 	  {
 		
-		  update_time_value++;
+		  update_time_value++;           
 			
 			if(update_time_value == work_time)
 			{
 			  	
-				 update_time_value = 0;
+				 update_time_value = 0;       
 				
 			   start_flag = OFF_FLAG;
 				
