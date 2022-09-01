@@ -140,6 +140,10 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
 				 
 			   if(RegValue == ON_FLAG)
 				  { 
+						counter_1 = 0; 
+						counter_2 = 0;
+						update_value_1 = 0; 
+						update_value_2 = 0;
 				    start_flag = ON_FLAG;
 						stop_flag = OFF_FLAG;
 						HAL_TIM_Base_Start_IT(&htim6); 
@@ -169,34 +173,33 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
 			 
 			    work_time |=  (uint32_t)(RegValue << 16); //16
 		 
-		      //work_time *= 1000;       // convert second to ms
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		 case MB_COUNTER1: 
 			
-		   counter_1 = (uint16_t)RegValue; 
-		   update_value_1 =  (uint16_t)(RegValue ); 
+		 //  counter_1 = (uint16_t)RegValue; 
+		 //  update_value_1 =  (uint16_t)(RegValue ); 
 		
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		 case MB_COUNTER1 + 1: 
 			 
-			  counter_1 |=  (uint32_t)(RegValue << 16); 
-		    update_value_1 |=  (uint32_t)(RegValue << 16); 
+			  //counter_1 |=  (uint32_t)(RegValue << 16); 
+		    //update_value_1 |=  (uint32_t)(RegValue << 16); 
 		 
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		 case MB_COUNTER2:
 			 
-			  counter_2 = (uint16_t)RegValue; 
-		    update_value_2 =  (uint16_t)(RegValue ); 
+			  //counter_2 = (uint16_t)RegValue; 
+		    //update_value_2 =  (uint16_t)(RegValue ); 
 		  
 			break; 
 		 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		case MB_COUNTER2  + 1: 
 			
-			 counter_2 |=  (uint32_t)(RegValue << 16); 
-       update_value_2 |=  (uint32_t)(RegValue << 16);	
+			 //counter_2 |=  (uint32_t)(RegValue << 16); 
+       //update_value_2 |=  (uint32_t)(RegValue << 16);	
     break; 
      }
  }
