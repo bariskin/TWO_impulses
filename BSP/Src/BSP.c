@@ -43,6 +43,29 @@ void enable_RX(void)
 	}	
 	
 
+	void set_TEST_LED1(void)
+  {
+	  HAL_GPIO_WritePin(PULSE_1_GPIO_Port, PULSE_1_Pin, GPIO_PIN_SET); 	
+	}
+
+void reset_TEST_LED1(void)
+  {
+	  HAL_GPIO_WritePin(PULSE_1_GPIO_Port, PULSE_1_Pin, GPIO_PIN_RESET); 	
+	}
+
+void set_TEST_LED2(void)
+  {
+	  HAL_GPIO_WritePin(PULSE_2_GPIO_Port, PULSE_2_Pin, GPIO_PIN_SET); 	
+	}
+	
+
+void reset_TEST_LED2(void)
+  {
+	  HAL_GPIO_WritePin(PULSE_2_GPIO_Port, PULSE_2_Pin, GPIO_PIN_RESET); 	
+	}
+	
+	
+	
 /**
 * @brief  HAL_TIM_PeriodElapsedCallback 
 * @param  structure of timer

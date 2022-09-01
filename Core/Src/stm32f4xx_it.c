@@ -22,6 +22,8 @@
 #include "stm32f4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "BSP.h"
+
 extern uint32_t volatile counter_1;
 extern uint32_t volatile counter_2;
 extern uint16_t volatile start_flag; 
@@ -192,6 +194,9 @@ void EXTI9_5_IRQHandler(void)
 	
   if (HAL_GPIO_ReadPin(INPUT_1_GPIO_Port,INPUT_1_Pin) == GPIO_PIN_RESET)   
   {  
+		
+		reset_TEST_LED1();
+		
 		if(start_flag)
 		 {			
 		  counter_1++;
@@ -200,17 +205,31 @@ void EXTI9_5_IRQHandler(void)
     
 	else if (HAL_GPIO_ReadPin(INPUT_2_GPIO_Port,INPUT_2_Pin) == GPIO_PIN_RESET) 
 	{
+		 
+		reset_TEST_LED2();
+		
 		if(start_flag)
 		 {
 	    counter_2++;
 		 }
+	}		
+	
+  else if (HAL_GPIO_ReadPin(INPUT_1_GPIO_Port,INPUT_1_Pin) == GPIO_PIN_SET)   
+  {  
+		
+		set_TEST_LED1();
+
+	}
+    
+	else if (HAL_GPIO_ReadPin(INPUT_2_GPIO_Port,INPUT_2_Pin) == GPIO_PIN_SET) 
+	{
+		set_TEST_LED2();
 	}		
 
   /* USER CODE END EXTI9_5_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(INPUT_1_Pin);
   HAL_GPIO_EXTI_IRQHandler(INPUT_2_Pin);
   /* USER CODE BEGIN EXTI9_5_IRQn 1 */
-	
 	
 	impuls_mutex = 0;
 	

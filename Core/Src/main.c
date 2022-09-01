@@ -403,15 +403,6 @@ void init_TEST_LEDS(void)
      GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
      HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);	
 	}
-void set_TEST_LED1(void)
-  {
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); 	
-	}
-
-void reset_TEST_LED1(void)
-  {
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); 	
-	}
 
 
 /* USER CODE END 4 */
