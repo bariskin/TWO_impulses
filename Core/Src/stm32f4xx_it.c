@@ -45,7 +45,7 @@ extern void USER_UART_IRQHandler(UART_HandleTypeDef *huart);
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+uint8_t impuls_mutex = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -186,6 +186,10 @@ void EXTI9_5_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI9_5_IRQn 0 */
 	
+	
+	impuls_mutex = 1;
+	
+	
   if (HAL_GPIO_ReadPin(INPUT_1_GPIO_Port,INPUT_1_Pin) == GPIO_PIN_RESET)   
   {  
 		if(start_flag)
@@ -206,7 +210,11 @@ void EXTI9_5_IRQHandler(void)
   HAL_GPIO_EXTI_IRQHandler(INPUT_1_Pin);
   HAL_GPIO_EXTI_IRQHandler(INPUT_2_Pin);
   /* USER CODE BEGIN EXTI9_5_IRQn 1 */
-
+	
+	
+	impuls_mutex = 0;
+	
+	
   /* USER CODE END EXTI9_5_IRQn 1 */
 }
 

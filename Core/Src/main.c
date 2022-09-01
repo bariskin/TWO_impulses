@@ -42,6 +42,7 @@ extern uint32_t work_time ;
 extern uint32_t update_time_value;
 extern uint16_t volatile start_flag ; 
 extern uint16_t volatile stop_flag; 
+extern uint8_t impuls_mutex;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -123,9 +124,7 @@ int main(void)
 	
 	
 	 /* **************Initialisation of the Modbus*************** */ 
-
-   //init_TEST_LEDS();
-	 
+ 
 	 enable_RX(); // direction for RS-485
 		 
    eMBErrorCode    eStatus;
@@ -160,8 +159,8 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 256);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+//  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+//  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* definition and creation of ModBusTask */
   osThreadDef(ModBusTask, ModBusFunction, osPriorityNormal, 0, 256);
@@ -253,7 +252,7 @@ static void MX_TIM6_Init(void)
   htim6.Instance = TIM6;
   htim6.Init.Prescaler = 20999;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 3999;
+  htim6.Init.Period = 3;                                          // for timer period 1 ms 
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
@@ -504,10 +503,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     }
   } 
 	
-	else if (htim->Instance == TIM6)
+	else if (htim->Instance == TIM6)         // 1 ms 
 	  {
 		
-		  update_time_value++;           
+		   update_time_value++;     
+
+			if(!impuls_mutex) 
+			{
+        update_value_1 = counter_1;        // current value counter_1
+        update_value_2 = counter_2;	 	     // current value counter_2	
+			}
 			
 			if(update_time_value == work_time)
 			{
@@ -521,7 +526,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				 HAL_TIM_Base_Stop_IT(&htim6); 
 				
 				 update_value_1 = counter_1;
-         update_value_2 = counter_1;	 		
+         update_value_2 = counter_2;	 		
 			
 			}	
 						

@@ -72,45 +72,46 @@ void MODBUS_LeaveLock(void)
 		
 		switch(MBRegAddr)
 		{   
-		 
+			
+		 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   
 			case MB_START_CMD:
 				
 			  OutputValue =  (uint16_t)start_flag;
 				break;
-			
+		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   		
 			case MB_STOP_FLAG:
 				
-			  OutputValue =  (uint16_t)stop_flag;
+			   OutputValue =  (uint16_t)stop_flag;
 				break;
-			
+		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   
 		case MB_TIME_VALUE:
 			
-      OutputValue = (uint16_t)work_time;
+        OutputValue = (uint16_t)work_time;
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   
 		case MB_TIME_VALUE + 1:
 			
-      OutputValue =  (uint16_t)((uint32_t)(work_time >> 16));
+       OutputValue =  (uint16_t)((uint32_t)(work_time >> 16));
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		case MB_COUNTER1:
 			
-		OutputValue = (uint16_t)update_value_1;			
+		   OutputValue = (uint16_t)update_value_1;			
 		break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		case MB_COUNTER1 + 1: 
 			
-    OutputValue = (uint16_t)((uint32_t)(update_value_1 >> 16));
+       OutputValue = (uint16_t)((uint32_t)(update_value_1 >> 16));
  		break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		case MB_COUNTER2:
 			
-	   	OutputValue = (uint16_t)update_value_2;
+	   	   OutputValue = (uint16_t)update_value_2;
 			break; 
 		 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		case MB_COUNTER2 + 2: 
 			
-	    OutputValue = (uint16_t)((uint32_t)(update_value_2 >> 16));
+	       OutputValue = (uint16_t)((uint32_t)(update_value_2 >> 16));
 			break;
 		 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/ 
 	
@@ -152,13 +153,13 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
       case MB_TIME_VALUE:
 				
 		 	    work_time = (uint16_t)RegValue; //16
-			
 			break;
 		  /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   
 		 case MB_TIME_VALUE  + 1:
 			 
 			    work_time |=  (uint32_t)(RegValue << 16); //16
-			 
+		 
+		      work_time *= 1000;       // convert second to ms
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		 case MB_COUNTER1: 
