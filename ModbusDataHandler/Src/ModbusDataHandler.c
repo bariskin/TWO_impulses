@@ -139,6 +139,7 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
 				  { 
 				    start_flag = ON_FLAG;
 						HAL_TIM_Base_Start_IT(&htim6); 
+						set_LED_STM();
 				  }
 				 
 				 break;
@@ -159,7 +160,7 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
 			 
 			    work_time |=  (uint32_t)(RegValue << 16); //16
 		 
-		      work_time *= 1000;       // convert second to ms
+		      //work_time *= 1000;       // convert second to ms
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		 case MB_COUNTER1: 

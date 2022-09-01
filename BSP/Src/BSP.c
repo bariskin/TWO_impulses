@@ -65,7 +65,58 @@ void reset_TEST_LED2(void)
 	}
 	
 	
+void reset_LED_STM(void)
+  {
+	  HAL_GPIO_WritePin(LED_STM_GPIO_Port, LED_STM_Pin, GPIO_PIN_RESET); 	
+	}
 	
+ void set_LED_STM(void)
+  {
+	  HAL_GPIO_WritePin(LED_STM_GPIO_Port, LED_STM_Pin, GPIO_PIN_SET); 	
+	}
+	
+	
+	
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+  {
+		
+   if(GPIO_Pin == INPUT_1_Pin)
+   {
+		  if (HAL_GPIO_ReadPin(INPUT_1_GPIO_Port,INPUT_1_Pin) == GPIO_PIN_SET)   
+      {  
+		    set_TEST_LED1();
+		
+		    if(start_flag)
+		     {			
+		       counter_1++;
+		     }
+	    }
+			else 
+			{ 
+			 reset_TEST_LED1();	
+			}
+			
+   }
+		 
+	else if(GPIO_Pin == INPUT_2_Pin)
+   {
+		 if (HAL_GPIO_ReadPin(INPUT_2_GPIO_Port,INPUT_2_Pin) == GPIO_PIN_SET)   
+      {  
+		
+		    set_TEST_LED1();
+		
+		    if(start_flag)
+		     {			
+		       counter_2++;
+		     }
+	    }
+			else 
+			{ 
+			 reset_TEST_LED2();	
+			} 	  
+	 }
+
+	}	
 /**
 * @brief  HAL_TIM_PeriodElapsedCallback 
 * @param  structure of timer

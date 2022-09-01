@@ -104,9 +104,7 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs,
     int  iRegIndex;
     uint16_t MBValue = 0x0000;
     
-    //usAddress -= 40001;
-	  //tempADR = usAddress;
-	
+  
     if( ( usAddress >= REG_HOLDING_START ) &&
         ( usAddress + usNRegs <= REG_HOLDING_START + REG_HOLDING_NREGS ) )
     {
@@ -120,7 +118,7 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs,
             while( usNRegs > 0 )
 							
             {
-							  //osDelay(100);
+					
                 MBValue =  WriteParamToModbusStack(iRegIndex);
               
                 *pucRegBuffer++ = ( unsigned char )( MBValue>> 8 );

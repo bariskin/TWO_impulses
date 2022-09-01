@@ -45,6 +45,10 @@ extern uint16_t volatile start_flag;
   void reset_TEST_LED1(void);
   void set_TEST_LED2(void);
   void reset_TEST_LED2(void);
+	void reset_LED_STM(void);
+  void set_LED_STM(void);
+ 
+	
 	
 
   /**

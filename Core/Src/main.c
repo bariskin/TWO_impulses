@@ -159,8 +159,8 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-//  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
-//  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 256);
+  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* definition and creation of ModBusTask */
   osThreadDef(ModBusTask, ModBusFunction, osPriorityNormal, 0, 256);
@@ -252,7 +252,7 @@ static void MX_TIM6_Init(void)
   htim6.Instance = TIM6;
   htim6.Init.Prescaler = 20999;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 3;                                          // for timer period 1 ms 
+  htim6.Init.Period = 3999;                                          // for timer period 1 sec 
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
@@ -390,19 +390,19 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-void init_TEST_LEDS(void)
-  {
-	   GPIO_InitTypeDef GPIO_InitStruct = {0};
-	
-		 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_RESET);
-		 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
-		 
-		 GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
-     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-     GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);	
-	}
+//void init_TEST_LEDS(void)
+//  {
+//	   GPIO_InitTypeDef GPIO_InitStruct = {0};
+//	
+//		 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_RESET);
+//		 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
+//		 
+//		 GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
+//     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//     GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+//     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);	
+//	}
 
 
 /* USER CODE END 4 */
@@ -442,7 +442,7 @@ void ModBusFunction(void const * argument)
    { 
      eMBPoll();                 /*  ModBus polling */ 
    }
-	  osDelay(2);
+	  osDelay(3);
   }
   /* USER CODE END ModBusFunction */
 }
@@ -494,7 +494,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     }
   } 
 	
-	else if (htim->Instance == TIM6)         // 1 ms 
+	else if (htim->Instance == TIM6)         // 1 sec
 	  {
 		
 		   update_time_value++;     
@@ -517,8 +517,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				 HAL_TIM_Base_Stop_IT(&htim6); 
 				
 				 update_value_1 = counter_1;
-         update_value_2 = counter_2;	 		
-			
+         update_value_2 = counter_2;	
+         reset_LED_STM();
+      	
 			}	
 						
 		}
