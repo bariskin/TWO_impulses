@@ -163,7 +163,7 @@ int main(void)
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* definition and creation of ModBusTask */
-  osThreadDef(ModBusTask, ModBusFunction, osPriorityNormal, 0, 256);
+  osThreadDef(ModBusTask, ModBusFunction,  osPriorityLow, 0, 256);
   ModBusTaskHandle = osThreadCreate(osThread(ModBusTask), NULL);
 
 //  /* definition and creation of ProcessTask */
@@ -421,6 +421,7 @@ void StartDefaultTask(void const * argument)
   for(;;)
   {
     osDelay(500);
+		osThreadTerminate( defaultTaskHandle);  /*! task terminate */    
   }
   /* USER CODE END 5 */
 }
@@ -442,7 +443,7 @@ void ModBusFunction(void const * argument)
    { 
      eMBPoll();                 /*  ModBus polling */ 
    }
-	  osDelay(3);
+	  osDelay(5);
   }
   /* USER CODE END ModBusFunction */
 }
