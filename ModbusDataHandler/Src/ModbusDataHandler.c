@@ -27,6 +27,9 @@ extern uint32_t work_time;
 
 extern TIM_HandleTypeDef htim6;
 extern TIM_HandleTypeDef htim7;
+extern TIM_HandleTypeDef htim13;
+extern TIM_HandleTypeDef htim14;
+
 
 /* ------------------------Global variables----------------------------*/
 
@@ -138,7 +141,13 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
 			   if(RegValue == ON_FLAG)
 				  { 
 				    start_flag = ON_FLAG;
+						stop_flag = OFF_FLAG;
 						HAL_TIM_Base_Start_IT(&htim6); 
+						HAL_TIM_Base_Start_IT(&htim13);
+	          HAL_TIM_Base_Start_IT(&htim14);
+	          HAL_TIM_IC_Start_IT(&htim13, TIM_CHANNEL_1);
+            HAL_TIM_IC_Start_IT(&htim14, TIM_CHANNEL_1);
+						
 						set_LED_STM();
 				  }
 				 

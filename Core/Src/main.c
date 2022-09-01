@@ -53,6 +53,8 @@ extern uint8_t impuls_mutex;
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef htim6;
 TIM_HandleTypeDef htim7;
+TIM_HandleTypeDef htim13;
+TIM_HandleTypeDef htim14;
 
 UART_HandleTypeDef huart2;
 
@@ -73,6 +75,8 @@ static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM7_Init(void);
 static void MX_TIM6_Init(void);
+static void MX_TIM13_Init(void);
+static void MX_TIM14_Init(void);
 void StartDefaultTask(void const * argument);
 void ModBusFunction(void const * argument);
 void ProcessTaskFunction(void const * argument);
@@ -119,8 +123,15 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM7_Init();
   MX_TIM6_Init();
-	
+  MX_TIM13_Init();
+  MX_TIM14_Init();
   /* USER CODE BEGIN 2 */
+	
+	//HAL_TIM_Base_Start_IT(&htim13);
+	//HAL_TIM_Base_Start_IT(&htim14);
+	//HAL_TIM_IC_Start_IT(&htim13, TIM_CHANNEL_1);
+  //HAL_TIM_IC_Start_IT(&htim14, TIM_CHANNEL_1);
+	
 	
 	
 	 /* **************Initialisation of the Modbus*************** */ 
@@ -137,6 +148,10 @@ int main(void)
     */ 
    eStatus =  eMBInit(MB_RTU, 5, 0, 19200, MB_PAR_NONE );  
    eStatus =  eMBEnable();
+	
+	
+	
+	
 	
 	
   /* USER CODE END 2 */
@@ -159,12 +174,12 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 256);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+//  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 256);
+//  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
-  /* definition and creation of ModBusTask */
-  osThreadDef(ModBusTask, ModBusFunction,  osPriorityLow, 0, 256);
-  ModBusTaskHandle = osThreadCreate(osThread(ModBusTask), NULL);
+//  /* definition and creation of ModBusTask */
+//  osThreadDef(ModBusTask, ModBusFunction, osPriorityNormal, 0, 256);
+//  ModBusTaskHandle = osThreadCreate(osThread(ModBusTask), NULL);
 
 //  /* definition and creation of ProcessTask */
 //  osThreadDef(ProcessTask, ProcessTaskFunction, osPriorityRealtime, 0, 256);
@@ -175,7 +190,7 @@ int main(void)
   /* USER CODE END RTOS_THREADS */
 
   /* Start scheduler */
-  osKernelStart();
+ // osKernelStart();
 
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
@@ -183,6 +198,8 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+	  	eMBPoll(); 
+		  HAL_Delay(5);
 
     /* USER CODE BEGIN 3 */
   }
@@ -252,7 +269,7 @@ static void MX_TIM6_Init(void)
   htim6.Instance = TIM6;
   htim6.Init.Prescaler = 20999;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 3999;                                          // for timer period 1 sec 
+  htim6.Init.Period = 3999;
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
@@ -288,7 +305,7 @@ static void MX_TIM7_Init(void)
 
   /* USER CODE END TIM7_Init 1 */
   htim7.Instance = TIM7;
-  htim7.Init.Prescaler = 41;
+  htim7.Init.Prescaler = 83;
   htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim7.Init.Period = 49;
   htim7.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -305,6 +322,96 @@ static void MX_TIM7_Init(void)
   /* USER CODE BEGIN TIM7_Init 2 */
 
   /* USER CODE END TIM7_Init 2 */
+
+}
+
+/**
+  * @brief TIM13 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM13_Init(void)
+{
+
+  /* USER CODE BEGIN TIM13_Init 0 */
+
+  /* USER CODE END TIM13_Init 0 */
+
+  TIM_IC_InitTypeDef sConfigIC = {0};
+
+  /* USER CODE BEGIN TIM13_Init 1 */
+
+  /* USER CODE END TIM13_Init 1 */
+  htim13.Instance = TIM13;
+  htim13.Init.Prescaler = 83;
+  htim13.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim13.Init.Period = 65535;
+  htim13.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim13.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim13) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_TIM_IC_Init(&htim13) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigIC.ICPolarity = TIM_INPUTCHANNELPOLARITY_RISING;
+  sConfigIC.ICSelection = TIM_ICSELECTION_DIRECTTI;
+  sConfigIC.ICPrescaler = TIM_ICPSC_DIV1;
+  sConfigIC.ICFilter = 0;
+  if (HAL_TIM_IC_ConfigChannel(&htim13, &sConfigIC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM13_Init 2 */
+
+  /* USER CODE END TIM13_Init 2 */
+
+}
+
+/**
+  * @brief TIM14 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM14_Init(void)
+{
+
+  /* USER CODE BEGIN TIM14_Init 0 */
+
+  /* USER CODE END TIM14_Init 0 */
+
+  TIM_IC_InitTypeDef sConfigIC = {0};
+
+  /* USER CODE BEGIN TIM14_Init 1 */
+
+  /* USER CODE END TIM14_Init 1 */
+  htim14.Instance = TIM14;
+  htim14.Init.Prescaler = 83;
+  htim14.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim14.Init.Period = 65535;
+  htim14.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim14.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim14) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_TIM_IC_Init(&htim14) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigIC.ICPolarity = TIM_INPUTCHANNELPOLARITY_RISING;
+  sConfigIC.ICSelection = TIM_ICSELECTION_DIRECTTI;
+  sConfigIC.ICPrescaler = TIM_ICPSC_DIV1;
+  sConfigIC.ICFilter = 0;
+  if (HAL_TIM_IC_ConfigChannel(&htim14, &sConfigIC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM14_Init 2 */
+
+  /* USER CODE END TIM14_Init 2 */
 
 }
 
@@ -362,12 +469,6 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, LED_STM_Pin|PULSE_1_Pin|PULSE_2_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : INPUT_1_Pin INPUT_2_Pin */
-  GPIO_InitStruct.Pin = INPUT_1_Pin|INPUT_2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
-
   /*Configure GPIO pin : RS485_DIR_Pin */
   GPIO_InitStruct.Pin = RS485_DIR_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -381,10 +482,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
-
-  /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
-  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 }
 
@@ -454,17 +551,17 @@ void ModBusFunction(void const * argument)
 * @param argument: Not used
 * @retval None
 */
-///* USER CODE END Header_ProcessTaskFunction */
-//void ProcessTaskFunction(void const * argument)
-//{
-//  /* USER CODE BEGIN ProcessTaskFunction */
+/* USER CODE END Header_ProcessTaskFunction */
+void ProcessTaskFunction(void const * argument)
+{
+  /* USER CODE BEGIN ProcessTaskFunction */
 //  /* Infinite loop */
 //  for(;;)
 //  {
 //    osDelay(1);
 //  }
-//  /* USER CODE END ProcessTaskFunction */
-//}
+  /* USER CODE END ProcessTaskFunction */
+}
 
 /**
   * @brief  Period elapsed callback in non blocking mode
@@ -516,6 +613,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				 stop_flag = ON_FLAG;
 				
 				 HAL_TIM_Base_Stop_IT(&htim6); 
+				 HAL_TIM_Base_Stop_IT(&htim13);
+	       HAL_TIM_Base_Stop_IT(&htim14);
 				
 				 update_value_1 = counter_1;
          update_value_2 = counter_2;	

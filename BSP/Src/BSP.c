@@ -80,43 +80,73 @@ void reset_LED_STM(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   {
 		
-   if(GPIO_Pin == INPUT_1_Pin)
-   {
-		  if (HAL_GPIO_ReadPin(INPUT_1_GPIO_Port,INPUT_1_Pin) == GPIO_PIN_SET)   
-      {  
-		    set_TEST_LED1();
-		
-		    if(start_flag)
-		     {			
-		       counter_1++;
-		     }
-	    }
-			else 
-			{ 
-			 reset_TEST_LED1();	
-			}
-			
-   }
-		 
-	else if(GPIO_Pin == INPUT_2_Pin)
-   {
-		 if (HAL_GPIO_ReadPin(INPUT_2_GPIO_Port,INPUT_2_Pin) == GPIO_PIN_SET)   
-      {  
-		
-		    set_TEST_LED1();
-		
-		    if(start_flag)
-		     {			
-		       counter_2++;
-		     }
-	    }
-			else 
-			{ 
-			 reset_TEST_LED2();	
-			} 	  
-	 }
+//   if(GPIO_Pin == INPUT_1_Pin)
+//   {
+//		  if (HAL_GPIO_ReadPin(INPUT_1_GPIO_Port,INPUT_1_Pin) == GPIO_PIN_SET)   
+//      {  
+//		    set_TEST_LED1();
+//		
+//		    if(start_flag)
+//		     {			
+//		       counter_1++;
+//		     }
+//	    }
+//			else 
+//			{ 
+//			 reset_TEST_LED1();	
+//			}
+//			
+//   }
+//		 
+//	else if(GPIO_Pin == INPUT_2_Pin)
+//   {
+//		 if (HAL_GPIO_ReadPin(INPUT_2_GPIO_Port,INPUT_2_Pin) == GPIO_PIN_SET)   
+//      {  
+//		
+//		    set_TEST_LED1();
+//		
+//		    if(start_flag)
+//		     {			
+//		       counter_2++;
+//		     }
+//	    }
+//			else 
+//			{ 
+//			 reset_TEST_LED2();	
+//			} 	  
+//	 }
 
 	}	
+	
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) 
+{
+     if(htim->Instance == TIM13)
+        {
+            if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) // LOW to HIGH
+                {
+							   	if(start_flag)
+		                  {			
+		                   counter_1++;
+		                  }     
+                }   
+         }
+				
+			else if(htim->Instance == TIM14)
+        {
+            if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)  // LOW to HIGH
+                {
+										if(start_flag)
+		                  {			
+		                   counter_2++;
+		                 } 
+                       
+                }   
+         }	 
+}
+	
+	
+	
+	
 /**
 * @brief  HAL_TIM_PeriodElapsedCallback 
 * @param  structure of timer
