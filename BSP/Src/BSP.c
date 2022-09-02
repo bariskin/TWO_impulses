@@ -8,9 +8,9 @@
 /* ------------------------Includes ----------------------------------*/
 #include "BSP.h"
 #include "main.h"
-#include "cmsis_os.h"
-#include "FreeRTOS.h" 
-#include "task.h"
+//#include "cmsis_os.h"
+//#include "FreeRTOS.h" 
+//#include "task.h"
 #include "main.h"
 /* ------------------------External variables -------------------------*/
 extern  uint16_t timeout_Timer7 ;
@@ -23,10 +23,10 @@ uint32_t volatile counter_2 = 0;
 uint32_t volatile update_value_1 = 0;
 uint32_t volatile update_value_2 = 0;
 
-uint16_t  first_start_flag  = OFF_FLAG; 
-uint16_t  second_start_flag = OFF_FLAG; 
-uint16_t  first_stop_flag   = OFF_FLAG; 
-uint16_t  second_stop_flag  = OFF_FLAG;
+uint16_t volatile first_start_flag  = OFF_FLAG; 
+uint16_t volatile second_start_flag = OFF_FLAG; 
+uint16_t volatile first_stop_flag   = OFF_FLAG; 
+uint16_t volatile second_stop_flag  = OFF_FLAG;
 
 uint32_t work_time = 0;
 uint32_t update_time_value = 0;

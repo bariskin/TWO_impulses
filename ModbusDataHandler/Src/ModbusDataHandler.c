@@ -11,7 +11,7 @@
 /* ------------------------Includes ----------------------------------*/
 
 #include "ModbusDataHandler.h"
-#include "cmsis_os.h"
+//#include "cmsis_os.h"
 #include "BSP.h"
 /* ------------------------External variables -------------------------*/
 extern uint32_t volatile counter_1;
@@ -152,6 +152,7 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
       case MB_TIME_VALUE:
 				
 		 	    work_time = (uint16_t)RegValue; //16
+			    work_time *=1000;
 			break;
 		  /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   
 		 case MB_TIME_VALUE  + 1:
