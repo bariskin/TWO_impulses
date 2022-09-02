@@ -23,8 +23,10 @@ uint32_t volatile counter_2 = 0;
 uint32_t volatile update_value_1 = 0;
 uint32_t volatile update_value_2 = 0;
 
-uint16_t volatile start_flag = OFF_FLAG; 
-uint16_t volatile stop_flag = OFF_FLAG; 
+uint16_t  first_start_flag  = OFF_FLAG; 
+uint16_t  second_start_flag = OFF_FLAG; 
+uint16_t  first_stop_flag   = OFF_FLAG; 
+uint16_t  second_stop_flag  = OFF_FLAG;
 
 uint32_t work_time = 0;
 uint32_t update_time_value = 0;
@@ -86,14 +88,19 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
       {  
 		    set_TEST_LED1();
 		
-		    if(start_flag)
-		     {			
+		    if(first_start_flag)
+		     {	
+           second_start_flag = ON_FLAG;			 
 		       counter_1++;
 		     }
 	    }
 			else 
 			{ 
-			 reset_TEST_LED1();	
+				  if(first_stop_flag)   // 3.
+					  {
+						   second_stop_flag = ON_FLAG;
+						}
+			     reset_TEST_LED1();	
 			}
 			
    }
@@ -105,14 +112,18 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		
 		    set_TEST_LED1();
 		
-		    if(start_flag)
+		    if(second_start_flag)   // 5.
 		     {			
 		       counter_2++;
 		     }
 	    }
 			else 
 			{ 
-			 reset_TEST_LED2();	
+				if(second_stop_flag)   // 4.
+				{
+				  second_start_flag = OFF_FLAG;
+				}
+			   reset_TEST_LED2();	
 			} 	  
 	 }
 

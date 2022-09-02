@@ -29,7 +29,11 @@ extern "C" {
 extern uint32_t volatile counter_1;
 extern uint32_t volatile counter_2;
 
-extern uint16_t volatile start_flag; 
+
+extern uint16_t  first_start_flag; 
+extern uint16_t  second_start_flag; 
+extern uint16_t  first_stop_flag ; 
+extern uint16_t  second_stop_flag;
 
   /** @addtogroup template_file
   * @{

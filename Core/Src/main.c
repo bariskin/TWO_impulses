@@ -40,8 +40,8 @@ extern void prvvTIMERExpiredISR( void );
 
 extern uint32_t work_time ;
 extern uint32_t update_time_value;
-extern uint16_t volatile start_flag ; 
-extern uint16_t volatile stop_flag; 
+extern uint16_t  first_start_flag; 
+extern uint16_t  second_start_flag;  
 extern uint8_t impuls_mutex;
 /* USER CODE END PD */
 
@@ -159,12 +159,12 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 256);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+//  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 256);
+//  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
-  /* definition and creation of ModBusTask */
-  osThreadDef(ModBusTask, ModBusFunction, osPriorityNormal, 0, 256);
-  ModBusTaskHandle = osThreadCreate(osThread(ModBusTask), NULL);
+//  /* definition and creation of ModBusTask */
+//  osThreadDef(ModBusTask, ModBusFunction, osPriorityNormal, 0, 256);
+//  ModBusTaskHandle = osThreadCreate(osThread(ModBusTask), NULL);
 
 //  /* definition and creation of ProcessTask */
 //  osThreadDef(ProcessTask, ProcessTaskFunction, osPriorityRealtime, 0, 256);
@@ -175,13 +175,18 @@ int main(void)
   /* USER CODE END RTOS_THREADS */
 
   /* Start scheduler */
-  osKernelStart();
+ // osKernelStart();
 
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+		
+	  	eMBPoll();                 /*  ModBus polling */ 
+		
+		  HAL_Delay(2);
+		
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -434,16 +439,16 @@ void StartDefaultTask(void const * argument)
 /* USER CODE END Header_ModBusFunction */
 void ModBusFunction(void const * argument)
 {
-  /* USER CODE BEGIN ModBusFunction */
-  /* Infinite loop */
-  for(;;)
-  {
-  // if(!mod_bus_mutex_flag)
-   { 
-     eMBPoll();                 /*  ModBus polling */ 
-   }
-	  osDelay(3);
-  }
+//  /* USER CODE BEGIN ModBusFunction */
+//  /* Infinite loop */
+//  for(;;)
+//  {
+//  // if(!mod_bus_mutex_flag)
+//   { 
+//     eMBPoll();                 /*  ModBus polling */ 
+//   }
+//	  osDelay(3);
+//  }
   /* USER CODE END ModBusFunction */
 }
 
@@ -484,7 +489,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 1 */
 	
 	  /*  timer6 for ModBus RTU */	
-  else if(htim->Instance == TIM7) 
+  if(htim->Instance == TIM7) 
   {
     
     if((++counter_Timer7)>=timeout_Timer7)
@@ -510,9 +515,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			  	
 				 update_time_value = 0;       
 				
-			   start_flag = OFF_FLAG;
+		     first_start_flag = OFF_FLAG;     // 1.
 				
-				 stop_flag = ON_FLAG;
+				 first_stop_flag = ON_FLAG;       // 2.
 				
 				 HAL_TIM_Base_Stop_IT(&htim6); 
 				

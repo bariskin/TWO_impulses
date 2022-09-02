@@ -19,10 +19,6 @@ extern uint32_t volatile counter_2;
 extern uint32_t volatile update_value_1;
 extern uint32_t volatile update_value_2;
 
-
-extern uint16_t volatile start_flag; 
-extern uint16_t volatile stop_flag; 
-
 extern uint32_t work_time;
 
 extern TIM_HandleTypeDef htim6;
@@ -76,12 +72,12 @@ void MODBUS_LeaveLock(void)
 		 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   
 			case MB_START_CMD:
 				
-			  OutputValue =  (uint16_t)start_flag;
+			  OutputValue =  (uint16_t)first_start_flag;
 				break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   		
 			case MB_STOP_FLAG:
 				
-			   OutputValue =  (uint16_t)stop_flag;
+			   OutputValue =  (uint16_t)first_stop_flag;
 				break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   
 		case MB_TIME_VALUE:
@@ -135,11 +131,13 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
 			 
 			 case MB_START_CMD:
          
-       
-				 
 			   if(RegValue == ON_FLAG)
 				  { 
-				    start_flag = ON_FLAG;
+						second_start_flag = OFF_FLAG;
+						second_stop_flag = OFF_FLAG;
+						second_start_flag = OFF_FLAG; 
+						
+				    first_start_flag = ON_FLAG;
 						HAL_TIM_Base_Start_IT(&htim6); 
 						set_LED_STM();
 				  }
@@ -147,9 +145,7 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
 				 break;
 			/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   
 			 case  MB_STOP_FLAG:
-				 
-				    stop_flag =  (uint8_t)RegValue;
-				 
+				 	 
 				 break;
 			 
 			/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/     
@@ -162,34 +158,27 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
 			 
 			    work_time |=  (uint32_t)(RegValue << 16); //16
 		 
-		      //work_time *= 1000;       // convert second to ms
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		 case MB_COUNTER1: 
 			
-		   //counter_1 = (uint16_t)RegValue; 
-		   //update_value_1 =  (uint16_t)(RegValue ); 
-		
-			break;
+		   	break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		 case MB_COUNTER1 + 1: 
 			 
-			  //counter_1 |=  (uint32_t)(RegValue << 16); 
-		    //update_value_1 |=  (uint32_t)(RegValue << 16); 
+		; 
 		 
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		 case MB_COUNTER2:
 			 
-			  //counter_2 = (uint16_t)RegValue; 
-		    //update_value_2 =  (uint16_t)(RegValue ); 
+			 
 		  
 			break; 
 		 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		case MB_COUNTER2  + 1: 
 			
-			 //counter_2 |=  (uint32_t)(RegValue << 16); 
-       //update_value_2 |=  (uint32_t)(RegValue << 16);	
+			
     break; 
      }
  }
