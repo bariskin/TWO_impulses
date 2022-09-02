@@ -134,6 +134,8 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
      {   
 			 
 			 case MB_START_CMD:
+         
+       
 				 
 			   if(RegValue == ON_FLAG)
 				  { 
@@ -165,29 +167,29 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		 case MB_COUNTER1: 
 			
-		   counter_1 = (uint16_t)RegValue; 
-		   update_value_1 =  (uint16_t)(RegValue ); 
+		   //counter_1 = (uint16_t)RegValue; 
+		   //update_value_1 =  (uint16_t)(RegValue ); 
 		
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		 case MB_COUNTER1 + 1: 
 			 
-			  counter_1 |=  (uint32_t)(RegValue << 16); 
-		    update_value_1 |=  (uint32_t)(RegValue << 16); 
+			  //counter_1 |=  (uint32_t)(RegValue << 16); 
+		    //update_value_1 |=  (uint32_t)(RegValue << 16); 
 		 
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		 case MB_COUNTER2:
 			 
-			  counter_2 = (uint16_t)RegValue; 
-		    update_value_2 =  (uint16_t)(RegValue ); 
+			  //counter_2 = (uint16_t)RegValue; 
+		    //update_value_2 =  (uint16_t)(RegValue ); 
 		  
 			break; 
 		 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		case MB_COUNTER2  + 1: 
 			
-			 counter_2 |=  (uint32_t)(RegValue << 16); 
-       update_value_2 |=  (uint32_t)(RegValue << 16);	
+			 //counter_2 |=  (uint32_t)(RegValue << 16); 
+       //update_value_2 |=  (uint32_t)(RegValue << 16);	
     break; 
      }
  }

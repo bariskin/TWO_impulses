@@ -517,7 +517,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				 HAL_TIM_Base_Stop_IT(&htim6); 
 				
 				 update_value_1 = counter_1;
-         update_value_2 = counter_2;	
+         update_value_2 = counter_2;
+          
+         counter_1 = 0;
+         counter_2 = 0;
          reset_LED_STM();
       	
 			}	
