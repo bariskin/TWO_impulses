@@ -8,9 +8,9 @@
 /* ------------------------Includes ----------------------------------*/
 #include "BSP.h"
 #include "main.h"
-#include "cmsis_os.h"
-#include "FreeRTOS.h" 
-#include "task.h"
+//#include "cmsis_os.h"
+//#include "FreeRTOS.h" 
+//#include "task.h"
 #include "main.h"
 /* ------------------------External variables -------------------------*/
 extern  uint16_t timeout_Timer7 ;

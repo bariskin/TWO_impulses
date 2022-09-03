@@ -11,7 +11,7 @@
 /* ------------------------Includes ----------------------------------*/
 
 #include "ModbusDataHandler.h"
-#include "cmsis_os.h"
+//#include "cmsis_os.h"
 #include "BSP.h"
 /* ------------------------External variables -------------------------*/
 extern uint32_t volatile counter_1;
