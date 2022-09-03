@@ -38,9 +38,7 @@ extern volatile uint16_t counter_Timer7;
 extern void prvvTIMERExpiredISR( void );
 
 extern uint32_t work_time ;
-extern uint32_t update_time_value;
-extern uint16_t  first_start_flag; 
-extern uint16_t  second_start_flag;  
+ 
 extern uint8_t impuls_mutex;
 /* USER CODE END PD */
 
@@ -52,6 +50,7 @@ extern uint8_t impuls_mutex;
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef htim6;
 TIM_HandleTypeDef htim7;
+TIM_HandleTypeDef htim13;
 
 UART_HandleTypeDef huart2;
 
@@ -69,6 +68,7 @@ static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM7_Init(void);
 static void MX_TIM6_Init(void);
+static void MX_TIM13_Init(void);
 /* USER CODE BEGIN PFP */
 
 
@@ -111,6 +111,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM7_Init();
   MX_TIM6_Init();
+ // MX_TIM13_Init();
   /* USER CODE BEGIN 2 */
 	
 	
@@ -129,7 +130,8 @@ int main(void)
    eStatus =  eMBInit(MB_RTU, 5, 0, 19200, MB_PAR_NONE );  
    eStatus =  eMBEnable();
 	
-	
+	 //HAL_TIM_Base_Start_IT(&htim6); 
+	 //HAL_TIM_Base_Start_IT(&htim13); 
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -211,7 +213,7 @@ static void MX_TIM6_Init(void)
   htim6.Instance = TIM6;
   htim6.Init.Prescaler = 20999;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 3999;
+  htim6.Init.Period = 3;
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
@@ -264,6 +266,37 @@ static void MX_TIM7_Init(void)
   /* USER CODE BEGIN TIM7_Init 2 */
 
   /* USER CODE END TIM7_Init 2 */
+
+}
+
+/**
+  * @brief TIM13 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM13_Init(void)
+{
+
+  /* USER CODE BEGIN TIM13_Init 0 */
+
+  /* USER CODE END TIM13_Init 0 */
+
+  /* USER CODE BEGIN TIM13_Init 1 */
+
+  /* USER CODE END TIM13_Init 1 */
+  htim13.Instance = TIM13;
+  htim13.Init.Prescaler = 839;
+  htim13.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim13.Init.Period = 4;
+  htim13.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim13.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim13) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM13_Init 2 */
+
+  /* USER CODE END TIM13_Init 2 */
 
 }
 
@@ -342,27 +375,12 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 6, 0); // 
   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 }
 
 /* USER CODE BEGIN 4 */
-
-//void init_TEST_LEDS(void)
-//  {
-//	   GPIO_InitTypeDef GPIO_InitStruct = {0};
-//	
-//		 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_RESET);
-//		 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
-//		 
-//		 GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
-//     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-//     GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-//     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-//     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);	
-//	}
-
 
 /* USER CODE END 4 */
 
@@ -395,9 +413,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     }
   } 
 	
-	else if (htim->Instance == TIM6)         // 1 sec
+	else if (htim->Instance == TIM6)         // handler for TIM6  1 ms 
 	  {
-		
 		   update_time_value++;     
 
 			if(!impuls_mutex) 
@@ -411,9 +428,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			  	
 				 update_time_value = 0;       
 				
-		     first_start_flag = OFF_FLAG;     // 1.
+		     start_first_flag = OFF_FLAG;     
 				
-				 first_stop_flag = ON_FLAG;       // 2.
+				 stop_first_flag = ON_FLAG;       
 				
 				 HAL_TIM_Base_Stop_IT(&htim6); 
 				
@@ -423,10 +440,19 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
          counter_1 = 0;
          counter_2 = 0;
          reset_LED_STM();
-      	
+
 			}	
 						
 		}
+		
+//		else if (htim->Instance == TIM13)
+//		  {   
+//				if(start_first_flag)
+//					{
+//			    counter_1++;
+//				  counter_2++;
+//					}
+//			}
 
   /* USER CODE END Callback 1 */
 }

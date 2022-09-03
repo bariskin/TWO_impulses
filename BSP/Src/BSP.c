@@ -8,25 +8,22 @@
 /* ------------------------Includes ----------------------------------*/
 #include "BSP.h"
 #include "main.h"
-//#include "cmsis_os.h"
-//#include "FreeRTOS.h" 
-//#include "task.h"
-#include "main.h"
 /* ------------------------External variables -------------------------*/
 extern  uint16_t timeout_Timer7 ;
 extern volatile uint16_t counter_Timer7;
 extern void prvvTIMERExpiredISR( void );
 /* ------------------------Global variables----------------------------*/
-uint32_t volatile counter_1 = 0;
-uint32_t volatile counter_2 = 0;
+volatile uint32_t  counter_1 = 0;
+volatile uint32_t  counter_2 = 0;
 
 uint32_t volatile update_value_1 = 0;
 uint32_t volatile update_value_2 = 0;
 
-uint16_t  first_start_flag  = OFF_FLAG; 
-uint16_t  second_start_flag = OFF_FLAG; 
-uint16_t  first_stop_flag   = OFF_FLAG; 
-uint16_t  second_stop_flag  = OFF_FLAG;
+
+volatile uint16_t  start_first_flag  = OFF_FLAG; 
+volatile uint16_t  start_second_flag = OFF_FLAG; 
+volatile uint16_t  stop_first_flag   = OFF_FLAG ; 
+volatile uint16_t  stop_second_flag  = OFF_FLAG;
 
 uint32_t work_time = 0;
 uint32_t update_time_value = 0;
@@ -84,44 +81,45 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		
    if(GPIO_Pin == INPUT_1_Pin)
    {
-		  if (HAL_GPIO_ReadPin(INPUT_1_GPIO_Port,INPUT_1_Pin) == GPIO_PIN_SET)   
+		  if (HAL_GPIO_ReadPin(INPUT_1_GPIO_Port,INPUT_1_Pin) == GPIO_PIN_SET)       // rising input_1
       {  
 		    set_TEST_LED1();
 		
-		    if(first_start_flag)
+		    if(start_first_flag)
 		     {	
-           second_start_flag = ON_FLAG;			 
+           start_second_flag = ON_FLAG;			 
 		       counter_1++;
 		     }
 	    }
-			else 
+			else                                                                       //falling input_1
 			{ 
-				  if(first_stop_flag)   // 3.
+				  if(stop_first_flag)   
 					  {
-						   second_stop_flag = ON_FLAG;
+						   stop_second_flag = ON_FLAG;
 						}
 			     reset_TEST_LED1();	
 			}
 			
    }
 		 
-	else if(GPIO_Pin == INPUT_2_Pin)
+	else if(GPIO_Pin == INPUT_2_Pin)                                               // rising input_2
    {
 		 if (HAL_GPIO_ReadPin(INPUT_2_GPIO_Port,INPUT_2_Pin) == GPIO_PIN_SET)   
       {  
 		
-		    set_TEST_LED1();
+		    set_TEST_LED2();
 		
-		    if(second_start_flag)   // 5.
+		    if(start_second_flag)   
 		     {			
 		       counter_2++;
 		     }
 	    }
-			else 
+			else                                                                        //falling input_2
 			{ 
-				if(second_stop_flag)   // 4.
+				if(stop_second_flag)      
 				{
-				  second_start_flag = OFF_FLAG;
+					start_first_flag  = OFF_FLAG;                                          //  STOP counter_1
+				  start_second_flag = OFF_FLAG;                                          //  STOP counter_2
 				}
 			   reset_TEST_LED2();	
 			} 	  

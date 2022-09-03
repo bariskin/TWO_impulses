@@ -63,6 +63,7 @@ uint8_t impuls_mutex = 0;
 /* External variables --------------------------------------------------------*/
 extern TIM_HandleTypeDef htim6;
 extern TIM_HandleTypeDef htim7;
+extern TIM_HandleTypeDef htim13;
 extern UART_HandleTypeDef huart2;
 extern TIM_HandleTypeDef htim11;
 
@@ -231,10 +232,8 @@ void EXTI9_5_IRQHandler(void)
 	impuls_mutex = 1;
 	
   /* USER CODE END EXTI9_5_IRQn 0 */
-	
   HAL_GPIO_EXTI_IRQHandler(INPUT_1_Pin);
   HAL_GPIO_EXTI_IRQHandler(INPUT_2_Pin);
-	
   /* USER CODE BEGIN EXTI9_5_IRQn 1 */
 	
 	impuls_mutex = 0;
@@ -269,6 +268,20 @@ void USART2_IRQHandler(void)
   /* USER CODE BEGIN USART2_IRQn 1 */
 
   /* USER CODE END USART2_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM8 update interrupt and TIM13 global interrupt.
+  */
+void TIM8_UP_TIM13_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM8_UP_TIM13_IRQn 0 */
+
+  /* USER CODE END TIM8_UP_TIM13_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim13);
+  /* USER CODE BEGIN TIM8_UP_TIM13_IRQn 1 */
+
+  /* USER CODE END TIM8_UP_TIM13_IRQn 1 */
 }
 
 /**

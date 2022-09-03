@@ -72,12 +72,12 @@ void MODBUS_LeaveLock(void)
 		 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   
 			case MB_START_CMD:
 				
-			  OutputValue =  (uint16_t)first_start_flag;
+			  OutputValue =  (uint16_t)start_first_flag;
 				break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   		
 			case MB_STOP_FLAG:
 				
-			   OutputValue =  (uint16_t)first_stop_flag;
+			   OutputValue =  (uint16_t)start_second_flag;
 				break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   
 		case MB_TIME_VALUE:
@@ -133,11 +133,13 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
          
 			   if(RegValue == ON_FLAG)
 				  { 
-						second_start_flag = OFF_FLAG;
-						second_stop_flag = OFF_FLAG;
-						second_start_flag = OFF_FLAG; 
+					
+						stop_first_flag   = OFF_FLAG;
+						stop_second_flag  = OFF_FLAG; 
+						start_second_flag = OFF_FLAG;
 						
-				    first_start_flag = ON_FLAG;
+				    start_first_flag = ON_FLAG;
+						
 						HAL_TIM_Base_Start_IT(&htim6); 
 						set_LED_STM();
 				  }
@@ -152,6 +154,7 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
       case MB_TIME_VALUE:
 				
 		 	    work_time = (uint16_t)RegValue; //16
+			    work_time *= 1000;
 			break;
 		  /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   
 		 case MB_TIME_VALUE  + 1:
@@ -183,6 +186,3 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
      }
  }
 	 
-
- 
- 	 

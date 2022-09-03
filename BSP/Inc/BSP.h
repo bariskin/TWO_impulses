@@ -30,11 +30,13 @@ extern uint32_t volatile counter_1;
 extern uint32_t volatile counter_2;
 
 
-extern uint16_t  first_start_flag; 
-extern uint16_t  second_start_flag; 
-extern uint16_t  first_stop_flag ; 
-extern uint16_t  second_stop_flag;
+extern volatile uint16_t  start_first_flag; 
+extern volatile uint16_t  start_second_flag; 
+extern volatile uint16_t  stop_first_flag ; 
+extern volatile uint16_t  stop_second_flag;
 
+
+extern uint32_t update_time_value ;
   /** @addtogroup template_file
   * @{
   */
