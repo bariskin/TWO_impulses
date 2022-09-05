@@ -12,6 +12,8 @@
 extern  uint16_t timeout_Timer7 ;
 extern volatile uint16_t counter_Timer7;
 extern void prvvTIMERExpiredISR( void );
+
+extern uint8_t impuls_mutex ;
 /* ------------------------Global variables----------------------------*/
 volatile uint32_t  counter_1 = 0;
 volatile uint32_t  counter_2 = 0;
@@ -79,6 +81,8 @@ void reset_LED_STM(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   {
 		
+		impuls_mutex = 1 ;
+		
    if(GPIO_Pin == INPUT_1_Pin)
    {
 		  if (HAL_GPIO_ReadPin(INPUT_1_GPIO_Port,INPUT_1_Pin) == GPIO_PIN_SET)       // rising input_1
@@ -124,6 +128,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			   reset_TEST_LED2();	
 			} 	  
 	 }
+	 
+	 	impuls_mutex = 0 ;
+		
 
 	}	
 /**
