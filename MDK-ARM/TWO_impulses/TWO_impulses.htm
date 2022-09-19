@@ -3,7 +3,7 @@
 <title>Static Call Graph - [TWO_impulses\TWO_impulses.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image TWO_impulses\TWO_impulses.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Mon Sep 19 11:17:19 2022
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Mon Sep 19 11:42:43 2022
 <BR><P>
 <H3>Maximum Stack Usage =        208 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -147,8 +147,8 @@ Function Pointers
 Global Symbols
 </H3>
 <P><STRONG><a name="[72]"></a>__main</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, __main.o(!!!main))
-<BR><BR>[Calls]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
-<LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry
+<BR><BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry
+<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
 </UL>
 
 <P><STRONG><a name="[73]"></a>__scatterload</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter))
@@ -220,8 +220,8 @@ Global Symbols
 <P><STRONG><a name="[fb]"></a>__rt_lib_init_user_alloc_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000000C))
 
 <P><STRONG><a name="[81]"></a>__rt_lib_shutdown</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown.o(.ARM.Collect$$libshutdown$$00000000))
-<BR><BR>[Called By]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_ls
-<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;abort
+<BR><BR>[Called By]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;abort
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_ls
 </UL>
 
 <P><STRONG><a name="[fc]"></a>__rt_lib_shutdown_cpp_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000004))
@@ -241,8 +241,8 @@ Global Symbols
 <P><STRONG><a name="[103]"></a>__rt_lib_shutdown_user_alloc_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000E))
 
 <P><STRONG><a name="[74]"></a>__rt_entry</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry.o(.ARM.Collect$$rtentry$$00000000))
-<BR><BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_rt2
-<LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
+<BR><BR>[Called By]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_rt2
 </UL>
 
 <P><STRONG><a name="[104]"></a>__rt_entry_presh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000002))
@@ -530,9 +530,9 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 48 + Unknown Stack Size
 <LI>Call Chain = abort &rArr; __rt_SIGABRT &rArr; __rt_SIGABRT_inner &rArr; __default_signal_display &rArr; _ttywrch
 </UL>
-<BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_shutdown
-<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_SIGABRT
+<BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_SIGABRT
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sys_exit
+<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_shutdown
 </UL>
 <BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xMBRTUTransmitFSM
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xMBRTUTimerT35Expired
@@ -571,9 +571,9 @@ Global Symbols
 <P><STRONG><a name="[10f]"></a>__rt_heap_expand$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
 
 <P><STRONG><a name="[83]"></a>_sys_exit</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, sys_exit.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_exit
-<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__sig_exit
+<BR><BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__sig_exit
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;abort
+<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_exit
 </UL>
 
 <P><STRONG><a name="[85]"></a>__rt_SIGABRT</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, defsig_abrt_outer.o(.text))
