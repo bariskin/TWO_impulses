@@ -147,6 +147,23 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
 				 break;
 			/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/   
 			 case  MB_STOP_FLAG:
+				 
+			 
+			 	 //update_time_value = 0;       
+				
+		     start_first_flag = OFF_FLAG;     
+				
+				 stop_first_flag = ON_FLAG;       
+				
+				 HAL_TIM_Base_Stop_IT(&htim6); 
+				
+				 update_value_1 = counter_1;
+         update_value_2 = counter_2;
+          
+         counter_1 = 0;
+         counter_2 = 0;
+         reset_LED_STM();
+			 
 				 	 
 				 break;
 			 
