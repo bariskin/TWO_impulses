@@ -143,7 +143,10 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
 						   start_second_flag = OFF_FLAG;
 						
 				       start_first_flag = ON_FLAG;
-						
+							
+							 counter_1 = 0;
+						   counter_2 = 0;
+							
 						   HAL_TIM_Base_Start_IT(&htim6); 
 						   set_LED_STM();
 							
