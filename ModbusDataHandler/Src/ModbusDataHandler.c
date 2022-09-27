@@ -105,7 +105,7 @@ void MODBUS_LeaveLock(void)
 	   	   OutputValue = (uint16_t)update_value_2;
 			break; 
 		 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
-		case MB_COUNTER2_REG + 2: 
+		case MB_COUNTER2_REG + 1: 
 			
 	       OutputValue = (uint16_t)((uint32_t)(update_value_2 >> 16));
 			break;
