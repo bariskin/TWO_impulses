@@ -199,18 +199,20 @@ void ReadParamFromModbusStack(uint16_t MBregIdx, uint16_t RegValue)
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		 case MB_COUNTER1_REG: 
+			 
+			 update_value_1   =  (uint32_t)0; 
+		 
 			
 		   	break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		 case MB_COUNTER1_REG + 1: 
 			 
-		; 
 		 
 			break;
 		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 		 case MB_COUNTER2_REG:
 			 
-			 
+			update_value_2   =  (uint32_t)0; 
 		  
 			break; 
 		 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
