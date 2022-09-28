@@ -415,44 +415,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	
 	else if (htim->Instance == TIM6)         // handler for TIM6  1 ms 
 	  {
-		   //update_time_value++;     
-
+		     
 			if(!impuls_mutex) 
 			{
         update_value_1 = counter_1;        // current value counter_1
         update_value_2 = counter_2;	 	     // current value counter_2	
 			}
 			
-			//if(update_time_value == work_time)
-			//{
-			  	
-//				 update_time_value = 0;       
-//				
-//		     start_first_flag = OFF_FLAG;     
-//				
-//				 stop_first_flag = ON_FLAG;       
-//				
-//				 HAL_TIM_Base_Stop_IT(&htim6); 
-//				
-//				 update_value_1 = counter_1;
-//         update_value_2 = counter_2;
-//          
-//         counter_1 = 0;
-//         counter_2 = 0;
-//         reset_LED_STM();
-
-			//}	
-						
+				
 		}
-		
-//		else if (htim->Instance == TIM13)
-//		  {   
-//				if(start_first_flag)
-//					{
-//			    counter_1++;
-//				  counter_2++;
-//					}
-//			}
 		
 
   /* USER CODE END Callback 1 */
